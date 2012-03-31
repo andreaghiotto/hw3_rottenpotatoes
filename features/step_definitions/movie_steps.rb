@@ -29,7 +29,9 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.content  is the entire content of the page as a string.
-  assert false, "Unimplmemented"
+  #page.body =~ /(#{e1}|#{e2})/
+  debugger
+  #assert( $1 == e1 and $2 == e2, "I should see #{e1} before #{e2}" )
 end
 
 
@@ -92,6 +94,7 @@ When /no ratings selected/ do
   uncheckeds = uncheckeds.map { |r| r = "ratings_" + r }
   uncheckeds = uncheckeds.join(', ')
   step %{I uncheck the following ratings: "#{uncheckeds}"}
+  step %{I submit the search form on the homepage}
 end
 
 Then /I should not see movies/ do
@@ -110,6 +113,7 @@ When /all ratings selected/ do
   checkeds = checkeds.map { |r| r = "ratings_" + r }
   checkeds = checkeds.join(', ')
   step %{I check the following ratings: "#{checkeds}"}
+  step %{I submit the search form on the homepage}
 end
 
 Then /I should see all of the movies/ do
@@ -118,5 +122,5 @@ Then /I should see all of the movies/ do
   query = query.join(' or ')
   movie_list = Movie.where( query )
   assert( movie_list.length == Movie.where(1).length )
-  #movie_list.each { |m|  step %{I should see "#{m.title}"} }
+  movie_list.each { |m|  step %{I should see "#{m.title}"} }
 end

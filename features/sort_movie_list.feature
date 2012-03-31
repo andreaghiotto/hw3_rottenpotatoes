@@ -22,8 +22,11 @@ Background: movies have been added to database
   And I am on the RottenPotatoes home page
 
 Scenario: sort movies alphabetically
-  # your steps here
+  When all ratings selected
+  And I follow "Movie Title"
+  Then I should see "Aladdin" before "Chicken Run"
 
 Scenario: sort movies in increasing order of release date
-  # your steps here
-
+  When all ratings selected
+  And I follow "Release Date"
+  Then I should see "2001: A Space Odyssey" before "When Harry Met Sally"
